@@ -22,5 +22,10 @@
         print "Tentative de connexion sur sitebd<br><br>";
         $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base dedonnées");
     ?>
+
+    <a href="identification.php">
+        <button>Connexion</button>
+    </a>
+
 </body>
 </html>
