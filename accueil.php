@@ -24,6 +24,8 @@
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
        
+        echo "<ul>";
+
         while ($produit=mysqli_fetch_assoc($listeProduit)) {
             $id=$produit["idProduit"];
             $lib=$produit["libelle"];
@@ -33,14 +35,22 @@
             $queryImage = "SELECT * FROM $imageBd WHERE idProduit = $id";
             $listeImage= mysqli_query($link,$queryImage);
 
+            echo "<li>";
+
             while ($image=mysqli_fetch_assoc($listeImage)) {
                 $chemin=$image["chemin"];
-                echo '<img scr='.'/'.'$chemin>';
+                echo "<img src=$chemin class='vignette'>";
             }
             
-            print "$lib <br>";
-            print "$desc <br><br>";
+            echo "<br> $lib <br>";
+            echo "$desc <br>";
+            echo "$prix <t>berries</t> <br>";
+            echo "<input type='SUBMIT' id='ajoutpanier', value='Ajouter au panier'> <br><br>";
+
+            echo "</li>";
         }
+
+        echo "</ul>";
 
         mysqli_close($link); 
     ?>
