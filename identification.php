@@ -8,10 +8,13 @@
 <body>
 
     <h3>S'identifier</h3>
-    <p>Saisir son identifiant et mot de passe</p>
+    <p>Veuillez vous identifier avant de pouvoir accéder au panier</p>
     
     <FORM ENCTYPE="multipart/form-data">
+        <t>Identifiant : </t><br>
         <INPUT TYPE="TEXT" NAME="IDENTIFIANT"><BR><BR>
+        <t>Mot de passe : </t><br>
+        <INPUT TYPE="TEXT" NAME="MDP"><BR><BR>
         <INPUT TYPE="SUBMIT" VALUE="OK">
     </FORM>
 
