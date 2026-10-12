@@ -1,5 +1,8 @@
+<?php
+header('Content-Type: text/html; charset=UTF-8');
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +22,8 @@
         $produitBd = "Produit";
         $imageBd = "Image";
 
-        $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base dedonnées");
+        $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base de données");
+        mysqli_set_charset($link, "utf8mb4"); // <-- la ligne qui corrige les accents
 
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
@@ -39,13 +43,13 @@
 
             while ($image=mysqli_fetch_assoc($listeImage)) {
                 $chemin=$image["chemin"];
-                echo "<img src=$chemin class='vignette'>";
+                echo "<img src=vignette.php?img=$chemin>";
             }
             
-            echo "<br> $lib <br>";
+            echo "<h3>$lib</h3>";
             echo "$desc <br>";
-            echo "$prix <t>berries</t> <br>";
-            echo "<input type='SUBMIT' id='ajoutpanier', value='Ajouter au panier'> <br><br>";
+            echo "$prix berries <br>";
+            echo "<input type='submit' id='ajoutpanier' value='Ajouter au panier'> <br><br>";
 
             echo "</li>";
         }
