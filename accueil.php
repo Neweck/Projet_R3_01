@@ -8,6 +8,10 @@ header('Content-Type: text/html; charset=UTF-8');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>FRUIT MARKET</title>
+
+    <h1>Fruit Market</h1>
+
+    <h2>Liste des produits : </h2>
 </head>
 <body>
     
@@ -59,13 +63,8 @@ header('Content-Type: text/html; charset=UTF-8');
         mysqli_close($link); 
     ?>
 
-    <h1>Fruit Market</h1>
-
-    <h2>Liste des produits : </h2>
-
-
     <a href="identification.php">
-        <button>Connexion</button>
+        <button>Connexion Back-Office</button>
     </a>
 
 </body>
