@@ -23,7 +23,7 @@ header('Content-Type: text/html; charset=UTF-8');
         $imageBd = "Image";
 
         $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base de données");
-        mysqli_set_charset($link, "utf8mb4"); // <-- la ligne qui corrige les accents
+        mysqli_set_charset($link, "utf8mb4");
 
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
@@ -49,9 +49,10 @@ header('Content-Type: text/html; charset=UTF-8');
             echo "<h3>$lib</h3>";
             echo "$desc <br>";
             echo "$prix berries <br>";
-            echo "<input type='submit' id='ajoutpanier' value='Ajouter au panier'> <br><br>";
+            echo "<input type='submit' id='ajoutpanier' value='Ajouter au panier'>";
 
             echo "</li>";
+            echo "<br><br><br><br>";
         }
 
         echo "</ul>";

@@ -1,14 +1,15 @@
 <?php
     $src = $_GET["img"];
-    $largeur = imagesx($src);
-    $hauteur = imagesy($src);
+    $image = imagecreatefrompng($src);
+    $largeur = imagesx($image);
+    $hauteur = imagesy($image);
 
-    $nouvelleLargeur = 200;
-    $nouvelleHauteur = (int) ($hauteur * $nouvelleLargeur / $largeur); 
+    $nouvelleHauteur = 200;
+    $nouvelleLargeur = (int) ($largeur * $nouvelleHauteur / $hauteur);
 
     $dst = imagecreatetruecolor($nouvelleLargeur, $nouvelleHauteur);
 
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $nouvelleLargeur, $nouvelleHauteur, $largeur, $hauteur);
-
+    imagecopyresampled($dst, $image, 0, 0, 0, 0, $nouvelleLargeur, $nouvelleHauteur, $largeur, $hauteur);
+    header("Content-type: image/png");
     imagepng($dst);
 ?>
