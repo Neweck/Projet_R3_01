@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 20px;
+}
+
+.grille {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+.produit {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.images{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+img{
+    border-radius: 10px;
+}

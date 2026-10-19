@@ -1,39 +1,38 @@
 <?php
-header('Content-Type: text/html; charset=UTF-8');
-session_start();
+    session_start();
+    header('Content-Type: text/html; charset=UTF-8');
 
-    if (isset($_SESSION['login'])): 
-        echo htmlspecialchars($_SESSION['login']);
-    else:
-        echo "<p>Non connecté</p>";
-    endif;
-
-$idAjoute = 0;
-if (isset($_POST['ajouter'])) {
-    if (!isset($_SESSION['login'])) {
-        header('Location: identification.php');
-        exit;
+    $idAjoute = 0;
+    if (isset($_POST['ajouter'])) {
+        if (!isset($_SESSION['login'])) {
+            header('Location: identification.php');
+            exit;
+        }
+        $id = (int) $_POST['ajouter'];
+        $_SESSION['panier'][$id] = ($_SESSION['panier'][$id] ?? 0) + 1;
+        $idAjoute = $id;
     }
-    $id = (int) $_POST['ajouter'];
-    $_SESSION['panier'][$id] = ($_SESSION['panier'][$id] ?? 0) + 1;
-    $idAjoute = $id;
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <title>FRUIT MARKET</title>
-
-    <h1>Fruit Market</h1>
-
-    <h2>Liste des produits : </h2>
 </head>
 <body>
 
+    <h1>Fruit Market</h1>
+    <h2>Liste des produits : </h2>
+
     <?php
+        if (isset($_SESSION['login'])) {
+            echo htmlspecialchars($_SESSION['login']);
+        } else {
+            echo "<p>Non connecté</p>";
+        }
+
         $bdd= "egoignan_bd"; 
         $host= "lakartxela.iutbayonne.univ-pau.fr";
         $user= "egoignan_bd"; 
@@ -48,27 +47,25 @@ if (isset($_POST['ajouter'])) {
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
 
-        function maFonction() {
-                echo "ajouté au panier !";
-        }
+        echo "<div class='grille'>";
 
-        echo "<ul>";
-
-        while ($produit=mysqli_fetch_assoc($listeProduit)) {
-            $id=$produit["idProduit"];
-            $lib=$produit["libelle"];
-            $desc=$produit["description"];  
-            $prix=$produit["prix"];  
+        while ($produit = mysqli_fetch_assoc($listeProduit)) {
+            $id   = $produit["idProduit"];
+            $lib  = $produit["libelle"];
+            $desc = $produit["description"];
+            $prix = $produit["prix"];
 
             $queryImage = "SELECT * FROM $imageBd WHERE idProduit = $id";
-            $listeImage= mysqli_query($link,$queryImage);
+            $listeImage = mysqli_query($link, $queryImage);
 
-            echo "<li>";
+            echo "<div class='produit'>";
 
-            while ($image=mysqli_fetch_assoc($listeImage)) {
-                $chemin=$image["chemin"];
-                echo "<img src=vignette.php?img=$chemin>";
+            echo "<div class='images'>";
+            while ($image = mysqli_fetch_assoc($listeImage)) {
+                $chemin = $image["chemin"];
+                echo "<img src='vignette.php?img=$chemin'>";
             }
+            echo "</div>";
 
             echo "<h3>$lib</h3>";
             echo "$desc <br>";
@@ -78,18 +75,16 @@ if (isset($_POST['ajouter'])) {
             echo "<button type='submit' name='ajouter' value='$id'>Ajouter au panier</button>";
             echo "</form>";
 
-
             if ($idAjoute == $id) {
                 echo "<p>ajouté au panier !</p>";
             }
 
-            echo "</li>";
-            echo "<br><br><br><br>";
+            echo "</div>";
         }
 
-        echo "</ul>";
+        echo "</div>";
 
-        mysqli_close($link); 
+        mysqli_close($link);
     ?>
 
     <a href="identification.php">
