@@ -1,18 +1,21 @@
 <?php
     session_start();
+    require_once 'bdd.php';
+
     header('Content-Type: text/html; charset=UTF-8');
 
     $idAjoute = 0;
-    if (isset($_POST['ajouter'])) {
+    if (isset($_POST['ajouterAuPanier'])) {
         if (!isset($_SESSION['login'])) {
             header('Location: identification.php');
             exit;
         }
-        $id = (int) $_POST['ajouter'];
+        $id = (int) $_POST['ajouterAuPanier'];
         $_SESSION['panier'][$id] = ($_SESSION['panier'][$id] ?? 0) + 1;
         $idAjoute = $id;
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,16 +36,8 @@
             echo "<p>Non connecté</p>";
         }
 
-        $bdd= "egoignan_bd"; 
-        $host= "lakartxela.iutbayonne.univ-pau.fr";
-        $user= "egoignan_bd"; 
-        $pass= "egoignan_bd";
-
         $produitBd = "Produit";
         $imageBd = "Image";
-
-        $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base de données");
-        mysqli_set_charset($link, "utf8mb4");
 
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
@@ -72,7 +67,7 @@
             echo "$prix berries <br>";
 
             echo "<form method='post' action=''>";
-            echo "<button type='submit' name='ajouter' value='$id'>Ajouter au panier</button>";
+            echo "<button type='submit' name='ajouterAuPanier' value='$id'>Ajouter au panier</button>";
             echo "</form>";
 
             if ($idAjoute == $id) {
@@ -83,8 +78,6 @@
         }
 
         echo "</div>";
-
-        mysqli_close($link);
     ?>
 
     <a href="identification.php">
