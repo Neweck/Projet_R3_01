@@ -1,5 +1,8 @@
 <?php
-    header('Content-Type: text/html; charset=UTF-8');
+    session_start();
+    if (!isset($_SESSION['login']) || $_SESSION['statut'] !== 'administrateur') {
+        header('Location: identification.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,17 +14,17 @@
     <h2>Ajout de fruit dans le stock :</h2>
 </head>
 <body>
-    <t>Id :</t>
-    <INPUT TYPE="NUMBER" NAME="ID" SIZE="3" MAXLENGTH="11" ><BR>
-
     <t>Libelle :</t>
-    <INPUT TYPE="TEXT" NAME="LIBELLE" SIZE="10" MAXLENGTH="30" ><BR>
+    <input type="text" name="LIBELLE" size="10" maxlength="30" ><br><br>
 
     <t>Description :</t>
-    <INPUT TYPE="TEXT" NAME="DESCRIPTION" SIZE="50" MAXLENGTH="255" ><BR>
+    <input type="text" name="DESCRIPTION" size="50" maxlength="255" ><br><br>
 
     <t>Prix :</t>
-    <INPUT TYPE="NUMBER" NAME="PRIX" SIZE="10" MAXLENGTH="10" ><BR>
-    <INPUT TYPE="SUBMIT" VALUE="AJOUTER">
+    <input type="number" name="PRIX" size="10" max="999999999" ><br><br>
+
+    <input type="file" name="photo[]" multiple accept="image/png"><br><br><br>
+    
+    <input type="submit" value="AJOUTER">
 </body>
 </html>

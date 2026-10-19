@@ -14,7 +14,7 @@
         <t>Identifiant : </t><br>
         <INPUT TYPE="TEXT" NAME="ID"><BR><BR>
         <t>Mot de passe : </t><br>
-        <INPUT TYPE="TEXT" NAME="MDP"><BR><BR>
+        <INPUT TYPE="PASSWORD" NAME="MDP"><BR><BR>
         <INPUT TYPE="SUBMIT" VALUE="Valider">
     </FORM>
 

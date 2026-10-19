@@ -10,6 +10,5 @@
     $dst = imagecreatetruecolor($nouvelleLargeur, $nouvelleHauteur);
 
     imagecopyresampled($dst, $image, 0, 0, 0, 0, $nouvelleLargeur, $nouvelleHauteur, $largeur, $hauteur);
-    header("Content-type: image/png");
     imagepng($dst);
 ?>
