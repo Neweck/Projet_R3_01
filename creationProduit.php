@@ -5,6 +5,25 @@
     }
 
     require_once 'bdd.php';
+
+    if (isset($_POST['ajouterProduit'])) {
+        $libelle = $_POST['LIBELLE'];
+        $description = $_POST['DESCRIPTION'];
+        $prix = $_POST['PRIX'];
+
+        // echo "Libellé : " . htmlspecialchars($libelle) . "<br>";
+        // echo "Description : " . htmlspecialchars($description) . "<br>";
+        // echo "Prix : " . htmlspecialchars($prix) . "<br>";
+
+        $requete = mysqli_prepare($link, "INSERT INTO Produit (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
+
+        // Parametres de la requete preparee 
+        mysqli_stmt_bind_param($requete, 'ssd', $libelle, $description, $prix);     // 'ssd' -> "string" , "string" , "decimal";
+
+        mysqli_stmt_execute($requete);
+        mysqli_stmt_close($requete);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,19 +43,5 @@
         <input type="file" name="photo[]" multiple accept="image/png"><br><br>
         <input type="submit" name="ajouterProduit" value="AJOUTER">
     </form>
-
-    <?php
-
-        $nbProduit = mysqli_fetch_row(mysqli_query($link, "SELECT COUNT(*) FROM Produit"))[0];
-        $libelle = $_POST['LIBELLE'];
-
-
-        // $query = "INSERT INTO Produit VALUES ($nbProduit+1, )";
-        
-    
-    ?>
-
-
-
 </body>
 </html>
