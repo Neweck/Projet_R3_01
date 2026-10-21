@@ -8,7 +8,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,22 +16,60 @@
 
 </head>
 <body>
-    <h2>Ajout de fruit(s) dans le stock :</h2>
+
+        <?php
+            $produitBd = "Produit";
+            $imageBd = "Image";
+
+            $queryProduit = "SELECT * FROM $produitBd";
+            $listeProduit= mysqli_query($link,$queryProduit);
+
+            while ($produit = mysqli_fetch_assoc($listeProduit)) {
+                $id   = $produit["idProduit"];
+                $lib  = $produit["libelle"];
+                $desc = $produit["description"];
+                $prix = $produit["prix"];
+
+                $queryImage = "SELECT * FROM $imageBd WHERE idProduit = $id LIMIT 1";
+                $listeImage = mysqli_query($link, $queryImage);
+
+                echo "<div class='produit'>";
+
+                echo "<div class='images'>";
+                while ($image = mysqli_fetch_assoc($listeImage)) {
+                    $chemin = $image["chemin"];
+                    echo "<img src='vignette.php?img=$chemin'>";
+                }
+                echo "</div>";
+
+                echo "<h2>$id</h2>";
+                echo "<h3>$lib</h3>";
+                echo "$desc <br><br>";
+                echo "<b>$prix</b> berries <br>";
+
+                echo "</div>";
+            }
+
+        ?>
     
-    <form method="post" action="" enctype="multipart/form-data">
-        Libelle : <input type="text" name="LIBELLE_AJOUT" size="10" maxlength="30"><br><br>
-        Description : <input type="text" name="DESCRIPTION" size="50" maxlength="255"><br><br>
-        Prix : <input type="number" name="PRIX" max="999999999"><br><br>
-        <input type="file" name="photo[]" multiple accept="image/png"><br><br>
-        <input type="submit" name="ajouterProduit" value="AJOUTER">
-    </form>
+    <div>
+        <h2>Ajout d'un fruit dans le stock :</h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            Libelle : <input type="text" name="LIBELLE_AJOUT" size="10" maxlength="30"><br><br>
+            Description : <input type="text" name="DESCRIPTION" size="50" maxlength="255"><br><br>
+            Prix : <input type="number" name="PRIX" max="999999999"><br><br>
+            <input type="file" name="photo[]" multiple accept="image/png"><br><br>
+            <input type="submit" name="ajouterProduit" value="AJOUTER">
+        </form>
+    </div>
 
-    <h2>Suppression de fruit(s) dans le stock :</h2>
-
-    <form method="post" action="" enctype="multipart/form-data">
-        Libelle : <input type="text" name="LIBELLE_SUPPR" size="10" maxlength="30"><br><br>
-        <input type="submit" name="supprimerProduit" value="SUPPRIMER">
-    </form>
+    <div>
+        <h2>Suppression de fruit(s) dans le stock :</h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            Libelle : <input type="text" name="LIBELLE_SUPPR" size="10" maxlength="30"><br><br>
+            <input type="submit" name="supprimerProduit" value="SUPPRIMER">
+        </form>
+    </div>
 
     <?php 
         if (isset($_POST['ajouterProduit'])) {
