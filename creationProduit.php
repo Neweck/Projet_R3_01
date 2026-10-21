@@ -40,15 +40,15 @@
 
                 echo "<div class='images'>";
                 while ($image = mysqli_fetch_assoc($listeImage)) {
-                    $chemin = $image["chemin"];
-                    echo "<img src='vignette.php?img=$chemin'>";
+                    $cheminBD = $image["chemin"];
+                    echo "<img src='vignette.php?img=$cheminBD'>";
                 }
                 echo "</div>";
 
                 echo "<h2>$id</h2>";
                 echo "<h3>$lib</h3>";
                 echo "$desc <br><br>";
-                echo "<b>$prix berries <br>";
+                echo "<b>$prix</b> berries <br>";
 
                 echo "</div>";
 
@@ -62,14 +62,16 @@
                 $description = $_POST['DESCRIPTION'];
                 $prix = $_POST['PRIX'];
 
-                $requete = mysqli_prepare($link, "INSERT INTO $produitBd (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
-                mysqli_stmt_bind_param($requete, 'ssd', $libelle, $description, $prix);     // 'ssd' -> "string" , "string" , "decimal";
+                $requeteInsert = mysqli_prepare($link, "INSERT INTO $produitBd (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
+                mysqli_stmt_bind_param($requeteInsert, 'ssd', $libelle, $description, $prix);     // 'ssd' -> "string" , "string" , "decimal";
                 
                 $reqImage = mysqli_prepare($link, "INSERT INTO $imageBd (chemin, idProduit) VALUES (?, ?)");
                 mysqli_stmt_bind_param($reqImage, 'si', $chemin, $idProduit);   // 'ss' -> string , integer
 
                 if (!empty($_FILES['photo']['name'][0])) {
-                    if (mysqli_stmt_execute($requete)) {
+                    if (mysqli_stmt_execute($requeteInsert)) {
+                        $idProduit = mysqli_insert_id($link);
+
                         foreach ($_FILES['photo']['tmp_name'] as $i => $tmp) {
                             $fic = $_FILES['photo']['name'][$i];
                             $chemin = 'images/' . $fic;
@@ -81,12 +83,12 @@
                         echo "<p>Le produit a bien été ajouté.</p><br><br>";
                     }
 
-                    else {
-                        echo "<p>Erreur lors de l'ajout du produit !</p><br><br>";
-                    }
+                    else echo "<p>Erreur lors de l'ajout du produit !</p><br><br>";
 
                 }
-                mysqli_stmt_close($requete);
+
+                else echo "<p>Aucune(s) image(s) sélectionnée(s) !</p><br><br>";
+                mysqli_stmt_close($requeteInsert);
                 mysqli_stmt_close($reqImage);
             }
 
@@ -95,27 +97,20 @@
                 $id = (int) $_POST['ID_SUPPR'];
 
                 $requete = mysqli_prepare($link, "DELETE FROM Produit WHERE idProduit = ?");
-                $reqImg = mysqli_prepare($link, "DELETE FROM $imageBd WHERE idProduit = ?");
 
                 mysqli_stmt_bind_param($requete, 'i', $id);     // 'i' -> "integer"
-                mysqli_stmt_bind_param($reqImg, 'i', $id);
 
-                if (mysqli_stmt_execute($requete) && mysqli_stmt_execute($reqImg)) {
-                    if (mysqli_stmt_affected_rows($requete) > 0 && mysqli_stmt_affected_rows($reqImg)) {
+                if (mysqli_stmt_execute($requete)) {
+                    if (mysqli_stmt_affected_rows($requete) > 0) {
                         echo "<p id='formSupprProduit'>Le produit a bien été supprimé.</p><br><br>";
                     }
 
-                    else {
-                        echo "<p id='formAjoutProduit'>Aucun produit ne correspond à cet identifiant.</p><br><br>";
-                    }
+                    else echo "<p id='formAjoutProduit'>Aucun produit ne correspond à cet identifiant.</p><br><br>";
                 }
 
-                else {
-                    echo "<p>Erreur lors de la suppression du produit !</p><br><br>";
-                }
+                else echo "<p>Erreur lors de la suppression du produit !</p><br><br>";
 
                 mysqli_stmt_close($requete);
-                mysqli_stmt_close($reqImg);
             }
 
         ?>
@@ -125,8 +120,8 @@
         <div id="formAjoutProduit">
             <h2>Ajout d'un fruit dans le stock :</h2>
             <form method="post" action="" enctype="multipart/form-data">
-                Libelle : <input type="text" name="LIBELLE_AJOUT" size="10" maxlength="30"><br><br>
-                Description : <input type="text" name="DESCRIPTION" size="50" maxlength="255"><br><br>
+                Libelle : <input type="text" name="LIBELLE_AJOUT" size="20" maxlength="30"><br><br>
+                Description : <input type="text" name="DESCRIPTION" size="40" maxlength="255"><br><br>
                 Prix : <input type="number" name="PRIX" max="999999999"><br><br>
                 <input type="file" name="photo[]" multiple accept="image/png"><br><br>
                 <input type="submit" name="ajouterProduit" value="AJOUTER">
