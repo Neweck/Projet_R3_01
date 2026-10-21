@@ -12,6 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Back Office</title>
 
 </head>
@@ -23,6 +24,8 @@
 
             $queryProduit = "SELECT * FROM $produitBd";
             $listeProduit= mysqli_query($link,$queryProduit);
+
+            echo "<div class='catalogue'>";
 
             while ($produit = mysqli_fetch_assoc($listeProduit)) {
                 $id   = $produit["idProduit"];
@@ -45,58 +48,98 @@
                 echo "<h2>$id</h2>";
                 echo "<h3>$lib</h3>";
                 echo "$desc <br><br>";
-                echo "<b>$prix</b> berries <br>";
+                echo "<b>$prix berries <br>";
 
                 echo "</div>";
+
+            }
+
+            echo "</div>";
+
+
+            if (isset($_POST['ajouterProduit'])) {
+                $libelle = $_POST['LIBELLE_AJOUT'];
+                $description = $_POST['DESCRIPTION'];
+                $prix = $_POST['PRIX'];
+
+                $requete = mysqli_prepare($link, "INSERT INTO $produitBd (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
+                mysqli_stmt_bind_param($requete, 'ssd', $libelle, $description, $prix);     // 'ssd' -> "string" , "string" , "decimal";
+                
+                $reqImage = mysqli_prepare($link, "INSERT INTO $imageBd (chemin, idProduit) VALUES (?, ?)");
+                mysqli_stmt_bind_param($reqImage, 'si', $chemin, $idProduit);   // 'ss' -> string , integer
+
+                if (!empty($_FILES['photo']['name'][0])) {
+                    if (mysqli_stmt_execute($requete)) {
+                        foreach ($_FILES['photo']['tmp_name'] as $i => $tmp) {
+                            $fic = $_FILES['photo']['name'][$i];
+                            $chemin = 'images/' . $fic;
+
+                            if (move_uploaded_file($tmp, $chemin)) {
+                                mysqli_stmt_execute($reqImage);
+                            }
+                        }
+                        echo "<p>Le produit a bien été ajouté.</p><br><br>";
+                    }
+
+                    else {
+                        echo "<p>Erreur lors de l'ajout du produit !</p><br><br>";
+                    }
+
+                }
+                mysqli_stmt_close($requete);
+                mysqli_stmt_close($reqImage);
+            }
+
+
+            if (isset($_POST['supprimerProduit'])) {
+                $id = (int) $_POST['ID_SUPPR'];
+
+                $requete = mysqli_prepare($link, "DELETE FROM Produit WHERE idProduit = ?");
+                $reqImg = mysqli_prepare($link, "DELETE FROM $imageBd WHERE idProduit = ?");
+
+                mysqli_stmt_bind_param($requete, 'i', $id);     // 'i' -> "integer"
+                mysqli_stmt_bind_param($reqImg, 'i', $id);
+
+                if (mysqli_stmt_execute($requete) && mysqli_stmt_execute($reqImg)) {
+                    if (mysqli_stmt_affected_rows($requete) > 0 && mysqli_stmt_affected_rows($reqImg)) {
+                        echo "<p id='formSupprProduit'>Le produit a bien été supprimé.</p><br><br>";
+                    }
+
+                    else {
+                        echo "<p id='formAjoutProduit'>Aucun produit ne correspond à cet identifiant.</p><br><br>";
+                    }
+                }
+
+                else {
+                    echo "<p>Erreur lors de la suppression du produit !</p><br><br>";
+                }
+
+                mysqli_stmt_close($requete);
+                mysqli_stmt_close($reqImg);
             }
 
         ?>
     
-    <div>
-        <h2>Ajout d'un fruit dans le stock :</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            Libelle : <input type="text" name="LIBELLE_AJOUT" size="10" maxlength="30"><br><br>
-            Description : <input type="text" name="DESCRIPTION" size="50" maxlength="255"><br><br>
-            Prix : <input type="number" name="PRIX" max="999999999"><br><br>
-            <input type="file" name="photo[]" multiple accept="image/png"><br><br>
-            <input type="submit" name="ajouterProduit" value="AJOUTER">
-        </form>
+
+    <div class="admin">
+        <div id="formAjoutProduit">
+            <h2>Ajout d'un fruit dans le stock :</h2>
+            <form method="post" action="" enctype="multipart/form-data">
+                Libelle : <input type="text" name="LIBELLE_AJOUT" size="10" maxlength="30"><br><br>
+                Description : <input type="text" name="DESCRIPTION" size="50" maxlength="255"><br><br>
+                Prix : <input type="number" name="PRIX" max="999999999"><br><br>
+                <input type="file" name="photo[]" multiple accept="image/png"><br><br>
+                <input type="submit" name="ajouterProduit" value="AJOUTER">
+            </form>
+        </div>
+        
+        <div id="formSupprProduit">
+            <h2>Suppression de fruit(s) dans le stock :</h2>
+            <form method="post" action="">
+                Numéro : <input type="text" name="ID_SUPPR" size="10" maxlength="30"><br><br>
+                <input type="submit" name="supprimerProduit" value="SUPPRIMER">
+            </form>
+        </div>
     </div>
-
-    <div>
-        <h2>Suppression de fruit(s) dans le stock :</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            Libelle : <input type="text" name="LIBELLE_SUPPR" size="10" maxlength="30"><br><br>
-            <input type="submit" name="supprimerProduit" value="SUPPRIMER">
-        </form>
-    </div>
-
-    <?php 
-        if (isset($_POST['ajouterProduit'])) {
-            $libelle = $_POST['LIBELLE_AJOUT'];
-            $description = $_POST['DESCRIPTION'];
-            $prix = $_POST['PRIX'];
-
-            // echo "Libellé : " . htmlspecialchars($libelle) . "<br>";
-            // echo "Description : " . htmlspecialchars($description) . "<br>";
-            // echo "Prix : " . htmlspecialchars($prix) . "<br>";
-
-            $requete = mysqli_prepare($link, "INSERT INTO Produit (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
-
-            // Parametres de la requete preparee 
-            mysqli_stmt_bind_param($requete, 'ssd', $libelle, $description, $prix);     // 'ssd' -> "string" , "string" , "decimal";
-
-            if (mysqli_stmt_execute($requete)) {
-                echo "<p style='color:green;'>Le produit a bien été ajouté.</p><br><br>";
-            } 
-            
-            else {
-                echo "<p style='color:red;'>Erreur lors de l'ajout du produit !</p><br><br>";
-            }
-            
-            mysqli_stmt_close($requete);
-        }
-
-    ?>
 </body>
 </html>
