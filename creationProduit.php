@@ -68,13 +68,13 @@
                 $reqImage = mysqli_prepare($link, "INSERT INTO $imageBd (chemin, idProduit) VALUES (?, ?)");
                 mysqli_stmt_bind_param($reqImage, 'si', $chemin, $idProduit);   // 'ss' -> string , integer
 
-                if (!empty($_FILES['photo']['name'][0])) {
+                if (isset($_FILES['img1'], $_FILES['img2'])) {
                     if (mysqli_stmt_execute($requeteInsert)) {
                         $idProduit = mysqli_insert_id($link);
 
-                        foreach ($_FILES['photo']['tmp_name'] as $i => $tmp) {
-                            $fic = $_FILES['photo']['name'][$i];
-                            $chemin = 'images/' . $fic;
+                        foreach ($_FILES['img1', 'img2'] as $image) {
+                            $tmp = $_FILES[$image]['tmp_name'];
+                            $chemin = 'images/' . $_FILES['$image']['name'];
 
                             if (move_uploaded_file($tmp, $chemin)) {
                                 mysqli_stmt_execute($reqImage);
@@ -117,21 +117,22 @@
     
 
     <div class="admin">
-        <div id="formAjoutProduit">
+        <div>
             <h2>Ajout d'un fruit dans le stock :</h2>
             <form method="post" action="" enctype="multipart/form-data">
                 Libelle : <input type="text" name="LIBELLE_AJOUT" size="20" maxlength="30"><br><br>
                 Description : <input type="text" name="DESCRIPTION" size="40" maxlength="255"><br><br>
                 Prix : <input type="number" name="PRIX" max="999999999"><br><br>
-                <input type="file" name="photo[]" multiple accept="image/png"><br><br>
+                Sélectionner l'image du fruit : <input type="file" name="img1" accept="image/png" require><br><br>
+                Sélectionner l'illustration du pouvoir : <input type="file" name="img2" accept="image/png" require><br><br>
                 <input type="submit" name="ajouterProduit" value="AJOUTER">
             </form>
         </div>
         
-        <div id="formSupprProduit">
+        <div>
             <h2>Suppression de fruit(s) dans le stock :</h2>
             <form method="post" action="">
-                Numéro : <input type="text" name="ID_SUPPR" size="10" maxlength="30"><br><br>
+                Numéro du produit : <input type="text" name="ID_SUPPR" size="10" maxlength="30"><br><br>
                 <input type="submit" name="supprimerProduit" value="SUPPRIMER">
             </form>
         </div>
