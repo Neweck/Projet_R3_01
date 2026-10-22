@@ -26,14 +26,30 @@
 </head>
 <body>
 
-    <h1>Fruit Market</h1>
-    <h2>Liste des produits : </h2>
+    <div id='banniere'>
+        <h1>Fruit Market</h1>
+        <nav>
+            <form action="identification.php">
+                <button class="boutton">Connexion</button>
+            </form>
+
+            <form action="logout.php">
+                <button class="boutton">Déconnexion</button>
+            </form>
+
+            <form action="backOffice.php">
+                <button class="boutton">Back Office</button>
+            </form>
+        </nav>
+    </div>
 
     <?php
         if (isset($_SESSION['login'])) {
-            echo htmlspecialchars($_SESSION['login']);
-        } else {
-            echo "<p>Non connecté</p>";
+            echo "<p>Connecté en temps que : " . htmlspecialchars($_SESSION['login']) . "</p>";
+        } 
+        
+        else {
+            echo "<p>Non connecté</p><br>";
         }
 
         $produitBd = "Produit";
@@ -42,6 +58,7 @@
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
 
+        echo "<h2>Liste des produits</h2>";
         echo "<div class='grille'>";
 
         while ($produit = mysqli_fetch_assoc($listeProduit)) {
@@ -63,11 +80,11 @@
             echo "</div>";
 
             echo "<h3>$lib</h3>";
-            echo "$desc <br>";
-            echo "$prix berries <br>";
+            echo "<p>$desc</p>";
+            echo "<p>$prix berries</p> <br>";
 
             echo "<form method='post' action=''>";
-            echo "<button type='submit' name='ajouterAuPanier' value='$id'>Ajouter au panier</button>";
+            echo "<button class='boutton' type='submit' name='ajouterAuPanier' value='$id'>Ajouter au panier</button>";
             echo "</form>";
 
             if ($idAjoute == $id) {
@@ -77,20 +94,8 @@
             echo "</div>";
         }
 
-        echo "</div>";
+        echo "</div><br>";
     ?>
-
-    <a href="identification.php">
-        <button>Connexion</button>
-    </a>
-
-    <a href="logout.php">
-        <button>Déconnexion</button>
-    </a>
-
-    <a href="creationProduit.php">
-        <button>Back-Office</button>
-    </a>
 
 </body>
 </html>

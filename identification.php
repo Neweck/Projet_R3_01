@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Connexion</title>
 </head>
 
 <body>
+
+    <div id='banniere'>
+        <h1>Fruit Market</h1>
+    </div>
+
     <h3>S'identifier</h3>
     <p>Veuillez vous identifier avant de pouvoir accéder au panier</p>
     
