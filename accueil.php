@@ -7,7 +7,7 @@
     $idAjoute = 0;
     if (isset($_POST['ajouterAuPanier'])) {
         if (!isset($_SESSION['login'])) {
-            header('Location: identification.php');
+            header('Location: identification.html');
             exit;
         }
         $id = (int) $_POST['ajouterAuPanier'];
@@ -29,7 +29,7 @@
     <div id='banniere'>
         <h1>Fruit Market</h1>
         <nav>
-            <form action="identification.php">
+            <form action="identification.html">
                 <button class="boutton">Connexion</button>
             </form>
 
@@ -95,6 +95,8 @@
         }
 
         echo "</div><br>";
+
+        mysqli_close($link);
     ?>
 
 </body>

@@ -21,11 +21,13 @@
         } 
         else {
             echo "invalide";
-            echo "<meta http-equiv='refresh' content='0;URL=identification.php'>";
+            echo "<meta http-equiv='refresh' content='0;URL=identification.html'>";
         }
     } 
     else {
         echo "Login ou MDP vides.";
     }
+
+    mysqli_close($link);
 
 ?>
