@@ -31,7 +31,8 @@
 
     <?php
         if (isset($_SESSION['login'])) {
-            echo htmlspecialchars($_SESSION['login']);
+            echo $_SESSION['login'];
+            echo "<br><br>";
         } else {
             echo "<p>Non connecté</p>";
         }
@@ -58,7 +59,7 @@
             echo "<div class='images'>";
             while ($image = mysqli_fetch_assoc($listeImage)) {
                 $chemin = $image["chemin"];
-                echo "<img src='vignette.php?img=$chemin'>";
+                echo "<img class='zoomable' src='vignette.php?img=$chemin' data-mini='vignette.php?img=$chemin' data-full='$chemin'>";
             }
             echo "</div>";
 
@@ -80,12 +81,30 @@
         echo "</div>";
     ?>
 
+    <script>
+        const images = document.getElementsByClassName('zoomable');
+
+        for (const elem of images) {
+            elem.addEventListener('click', (e) => {
+                if (elem.getAttribute('src') === elem.dataset.mini) {
+                    elem.src = elem.dataset.full;
+                } else {
+                    elem.src = elem.dataset.mini;
+                }
+            });
+        }
+    </script>
+
     <a href="identification.php">
         <button>Connexion</button>
     </a>
 
     <a href="logout.php">
         <button>Déconnexion</button>
+    </a>
+
+    <a href="panier.php">
+        <button>Panier</button>
     </a>
 
     <a href="creationProduit.php">
