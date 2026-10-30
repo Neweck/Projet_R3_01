@@ -5,7 +5,7 @@
     header('Content-Type: text/html; charset=UTF-8');
 
     if (!isset($_SESSION['login'])) {
-        header('Location: identification.php');
+        header('Location: identification.html');
         exit;
     }
 
@@ -50,12 +50,19 @@
     <title>Panier</title>
 </head>
 <body>
+
+    <div id='banniere'>
+        <h1>Fruit Market</h1>
+        <nav>
+            <form action="accueil.php">
+                <button class="boutton">Accueil</button>
+            </form>
+        </nav>
+    </div>
+
     <h2>Mon panier : </h2>
 
     <?php
-        echo $_SESSION['login'];
-        echo "<br><br>";
-
         if (count($_SESSION['panier']) == 0) {
             echo "<p>Votre panier est vide.</p>";
         } 
@@ -124,11 +131,7 @@
 
     <br><br>
     <a href="paiement.php">
-        <button>Valider mon panier</button>
-    </a>
-    <br>
-    <a href="accueil.php">
-        <button>Retour aux produits</button>
+        <button class="boutton">Valider mon panier</button>
     </a>
 
 </body>

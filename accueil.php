@@ -40,6 +40,10 @@
             <form action="backOffice.php">
                 <button class="boutton">Back Office</button>
             </form>
+
+            <form action="panier.php">
+                <button class="boutton">Panier</button>
+            </form>
         </nav>
     </div>
 
@@ -49,7 +53,7 @@
         } 
         
         else {
-            echo "<p>Non connecté</p><br>";
+            echo "<p>Non connecté</p>";
         }
 
         $produitBd = "Produit";
@@ -112,22 +116,5 @@
             });
         }
     </script>
-
-    <a href="identification.php">
-        <button>Connexion</button>
-    </a>
-
-    <a href="logout.php">
-        <button>Déconnexion</button>
-    </a>
-
-    <a href="panier.php">
-        <button>Panier</button>
-    </a>
-
-    <a href="creationProduit.php">
-        <button>Back-Office</button>
-    </a>
-
 </body>
 </html>

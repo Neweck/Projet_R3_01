@@ -5,7 +5,7 @@
     header('Content-Type: text/html; charset=UTF-8');
 
     if (!isset($_SESSION['login'])) {
-        header('Location: identification.php');
+        header('Location: identification.html');
         exit;
     }
 
@@ -70,12 +70,22 @@
 </head>
 <body>
 
+    <div id='banniere'>
+        <h1>Fruit Market</h1>
+        <nav>
+            <form action="accueil.php">
+                <button class="boutton">Accueil</button>
+            </form>
+
+            <form action="panier.php">
+                <button class="boutton">Panier</button>
+            </form>
+        </nav>
+    </div>
+
     <h2>Paiement : </h2>
 
     <?php
-        echo $_SESSION['login'];
-        echo "<br><br>";
-
         if ($paye) {
             echo "<p>Vous avez bien payé !</p>";
         } else {
@@ -87,24 +97,18 @@
     ?>
 
     <form method="post" action="">
-        Numéro de carte (16 chiffres) :<br>
+        Numéro de carte (16 chiffres) :
         <input type="text" name="carte" maxlength="16" size="20"><br><br>
 
-        Date de validité :<br>
+        Date de validité : 
         <input type="number" name="mois" min="1" max="12" placeholder="MM">
         
         <input type="number" name="annee" placeholder="AAAA"><br><br>
 
-        <input type="submit" name="payer" value="Payer">
+        <input class="boutton" type="submit" name="payer" value="Payer">
     </form>
 
     <?php } ?>
-
-    <br>
-    <?php 
-        echo "<a href='panier.php'> <button>Retour au panier</button> </a>";
-        echo "<a href='accueil.php'> <button>Retour aux produits</button> </a>";
-    ?>
 
 </body>
 </html>
