@@ -59,6 +59,7 @@
         $produitBd = "Produit";
         $imageBd = "Image";
 
+        // Requête de récupération des informations de chaque produit de la BDD
         $queryProduit = "SELECT * FROM $produitBd";
         $listeProduit= mysqli_query($link,$queryProduit);
 
@@ -66,6 +67,8 @@
         echo "<div class='grille'>";
 
         while ($produit = mysqli_fetch_assoc($listeProduit)) {
+            
+            // Récupération des informations des produits un par un
             $id   = $produit["idProduit"];
             $lib  = $produit["libelle"];
             $desc = $produit["description"];
@@ -75,8 +78,8 @@
             $listeImage = mysqli_query($link, $queryImage);
 
             echo "<div class='produit'>";
-
             echo "<div class='images'>";
+            
             while ($image = mysqli_fetch_assoc($listeImage)) {
                 $chemin = $image["chemin"];
                 echo "<img class='zoomable' src='vignette.php?img=$chemin' data-mini='vignette.php?img=$chemin' data-full='$chemin'>";

@@ -4,6 +4,7 @@
     $user= "egoignan_bd"; 
     $pass= "egoignan_bd";
 
+    // Connexion à la base de données
     $link = mysqli_connect($host, $user, $pass, $bdd) or die("Impossible de se connecter à la base de données");
     mysqli_set_charset($link, "utf8mb4");
 ?>

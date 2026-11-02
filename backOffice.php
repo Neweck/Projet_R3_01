@@ -41,6 +41,7 @@
 
             echo "<div class='catalogue'>";
 
+            // Affichage des produits
             while ($produit = mysqli_fetch_assoc($listeProduit)) {
                 $id   = $produit["idProduit"];
                 $lib  = $produit["libelle"];
@@ -73,7 +74,7 @@
             mysqli_close($link);
         ?>
     
-
+    <!-- Formulaire d'ajout et de suppression de produits -->
     <div class="admin">
         <div>
             <h2>Ajout d'un fruit dans le stock</h2>

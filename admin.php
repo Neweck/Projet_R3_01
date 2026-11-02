@@ -3,9 +3,12 @@
     require_once 'bdd.php';
 
     if (isset($_POST['ID']) && isset($_POST['MDP'])) {
+
+        // Récupération de l'identifiant et du mot de passe inscrit dans le formulaire
         $id  = $_POST['ID'];
         $mdp = $_POST['MDP'];
 
+        // Requête de récupération de l'identifiant/mot de passe de la BDD
         $query = "SELECT * FROM Utilisateur WHERE identifiant = '$id' AND motDePasse = '$mdp'";
         $result = mysqli_query($link, $query);
         $user = mysqli_fetch_assoc($result);
