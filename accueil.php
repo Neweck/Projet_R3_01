@@ -48,6 +48,7 @@
     </div>
 
     <?php
+    
         if (isset($_SESSION['login'])) {
             echo "<p>Connecté en temps que : " . htmlspecialchars($_SESSION['login']) . "</p>";
         } 
@@ -107,18 +108,24 @@
         mysqli_close($link);
     ?>
 
-    <script>
-        const images = document.getElementsByClassName('zoomable');
+    <div id="apercu">
+        <img id="apercuImg" src="" alt="">
+    </div>
 
-        for (const elem of images) {
+    <script>
+        apercu = document.getElementById('apercu');
+        apercuImg = document.getElementById('apercuImg');
+
+        for (const elem of document.getElementsByClassName('zoomable')) {
             elem.addEventListener('click', (e) => {
-                if (elem.getAttribute('src') === elem.dataset.mini) {
-                    elem.src = elem.dataset.full;
-                } else {
-                    elem.src = elem.dataset.mini;
-                }
+                apercuImg.src = elem.dataset.full;  
+                apercu.classList.add('visible');
             });
         }
+
+        apercu.addEventListener('click', (e) => {
+            apercu.classList.remove('visible')
+        });
     </script>
 </body>
 </html>

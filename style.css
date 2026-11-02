@@ -1,8 +1,9 @@
-/* Style CSS */
+/* Style CSS global */
 /* ----------------------------- */
 
 body {
     margin: 0;
+    background-color: rgb(237, 235, 207);
     padding: 20px;
 }
 
@@ -22,7 +23,6 @@ nav {
     justify-content: center;
     padding-bottom: 1%;
 }
-
 
 /* Style des boutons  */
 .boutton {
@@ -119,4 +119,50 @@ nav {
 
 .admin form input {
     margin: 1%;
+}
+
+
+/* Style CSS accueil.php */
+/* ----------------------------- */
+
+#apercu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+#apercu.visible {
+    display: flex;
+}
+
+#apercu img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+}
+
+table {
+    border-spacing: 0;
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: white;
+}
+
+th, td {
+    padding: 8px;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+
+tr th:last-child, tr td:last-child {
+    border-right: none;
+}
+tr:last-child th, tr:last-child td {
+    border-bottom: none;
 }
