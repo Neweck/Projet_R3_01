@@ -112,7 +112,7 @@
         apercu = document.getElementById('apercu');
         apercuImg = document.getElementById('apercuImg');
 
-        for (elem of document.getElementsByClassName('zoomable')) {
+        for (const elem of document.getElementsByClassName('zoomable')) {
             elem.addEventListener('click', (e) => {
                 apercuImg.src = elem.dataset.full;  
                 apercu.classList.add('visible');
