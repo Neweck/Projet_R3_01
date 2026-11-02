@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: rgb(242, 240, 215);
+    background-color: rgb(237, 235, 207);
     padding: 20px;
 }
 
@@ -138,6 +138,7 @@ img {
 }
 
 table {
+    border-spacing: 0;
     border: 2px solid black;
     border-radius: 12px;
     background-color: white;
@@ -148,6 +149,7 @@ th, td {
     border-right: 2px solid black;
     border-bottom: 2px solid black;
 }
+
 
 tr th:last-child, tr td:last-child {
     border-right: none;
