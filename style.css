@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: rgb(242, 240, 215);
     padding: 20px;
 }
 
@@ -28,13 +29,14 @@ nav {
 
 .grille {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 10fr));
     gap: 30px;
     width: 100%;
 }
 
 .produit {
-    border: 1px solid #ccc;
+    border: 2px solid #000000;
+    background-color: white;
     padding: 15px;
     border-radius: 15px;
     display: flex;
@@ -66,7 +68,8 @@ img {
 .admin {
     display: flex;
     gap: 40px;
-    border: 1px solid #ccc;
+    border: 2px solid #000000;
+    background-color: white;
     border-radius: 15px;
     align-items: flex-start;
     text-align: center;
@@ -111,4 +114,44 @@ img {
   box-shadow: rgb(220, 200, 24) 0px 0px 0px 0px;
   transform: translateY(10px);
   transition: 100ms;
+}
+
+#apercu {
+    display: none;
+    position: fixed;
+    inset: 0;                         /* couvre tout l'écran */
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+#apercu.visible {
+    display: flex;
+}
+
+#apercu img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+}
+
+table {
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: white;
+}
+
+th, td {
+    padding: 8px;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+tr th:last-child, tr td:last-child {
+    border-right: none;
+}
+tr:last-child th, tr:last-child td {
+    border-bottom: none;
 }

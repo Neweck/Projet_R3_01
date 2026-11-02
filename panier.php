@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Panier</title>
 </head>
-<body>
+<body class="pagePanier">
 
     <div id='banniere'>
         <h1>Fruit Market</h1>
@@ -70,7 +70,7 @@
         else {
             $total = 0;
 
-            echo "<table border='1' cellpadding='8'>";
+            echo "<table>";
             echo "<tr>
                     <th>
                         ID
@@ -111,7 +111,7 @@
                     echo "<img src='vignette.php?img=".$image["chemin"]."'>";
                 }
                 echo "</th>";
-                echo "<th>".$produit["prix"]."berries</td>";
+                echo "<th>".$produit["prix"]." berries</td>";
                 echo "<th>$quantite</td>";
                 echo "<th>";
                 echo "<form method='post' action=''>";

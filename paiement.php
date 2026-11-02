@@ -88,27 +88,27 @@
     <?php
         if ($paye) {
             echo "<p>Vous avez bien payé !</p>";
-        } else {
+        } 
+        else {
             echo "<p>Total à payer : $total berries</p>";
 
             foreach ($erreurs as $erreur) {
                 echo "<p>" .$erreur. "</p>";
             }
+
+            echo "<form method='post' action=''>";
+            echo "Numéro de carte (16 chiffres) :";
+            echo "<input type='text' name='carte' maxlength='16' size='20'><br><br>";
+
+            echo "Date de validité : ";
+            echo "<input type='number' name='mois' min='1' max='12' placeholder='MM'>";
+                
+            echo "<input type='number' name='annee' placeholder='AAAA'><br><br>";
+
+            echo "<input class='boutton' type='submit' name='payer' value='Payer'>";
+            echo "</form>";
+        }
     ?>
-
-    <form method="post" action="">
-        Numéro de carte (16 chiffres) :
-        <input type="text" name="carte" maxlength="16" size="20"><br><br>
-
-        Date de validité : 
-        <input type="number" name="mois" min="1" max="12" placeholder="MM">
-        
-        <input type="number" name="annee" placeholder="AAAA"><br><br>
-
-        <input class="boutton" type="submit" name="payer" value="Payer">
-    </form>
-
-    <?php } ?>
 
 </body>
 </html>
