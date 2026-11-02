@@ -135,6 +135,13 @@ nav {
     display: flex;
 }
 
+#apercu img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
 /* Style CSS panier.php */
 table {
     border-spacing: 0;

@@ -1,11 +1,38 @@
 <?php
     require_once 'bdd.php';
+    session_start();
+
+    // Gestion des erreurs de création de produit
+    $erreurs = [];
+
+    $libelle = $_POST['LIBELLE_AJOUT'];
+    $description = $_POST['DESCRIPTION'];
+    $prix = $_POST['PRIX'];
+
+    if ($libelle === '') {
+        $erreurs[] = "Le libellé est obligatoire.";
+    }
+    if ($description === '') {
+        $erreurs[] = "La description est obligatoire.";
+    }
+    if ($prix === '' || !is_numeric($prix) || $prix < 0) {
+        $erreurs[] = "Le prix est obligatoire et doit être un nombre positif.";
+    }
+    if (!isset($_FILES['img1']) || $_FILES['img1']['error'] !== UPLOAD_ERR_OK) {
+        $erreurs[] = "L'image du fruit est obligatoire.";
+    }
+    if (!isset($_FILES['img2']) || $_FILES['img2']['error'] !== UPLOAD_ERR_OK) {
+        $erreurs[] = "L'illustration du pouvoir est obligatoire.";
+    }
+
+    if (count($erreurs) > 0) {
+        $_SESSION['erreursAjout'] = $erreurs;
+        header('Location: backOffice.php');
+        exit;
+    }
 
     // Ajout d'un produit à la liste
     if (isset($_POST['ajouterProduit'])) {
-        $libelle = $_POST['LIBELLE_AJOUT'];
-        $description = $_POST['DESCRIPTION'];
-        $prix = $_POST['PRIX'];
 
         // Requête d'insertion des produits dans la BDD
         $requeteInsert = mysqli_prepare($link, "INSERT INTO Produit (LIBELLE, DESCRIPTION, PRIX) VALUES (?, ?, ?)");
@@ -44,4 +71,5 @@
 
         mysqli_close($link);
         header('Location: backOffice.php');
+        exit;
     }

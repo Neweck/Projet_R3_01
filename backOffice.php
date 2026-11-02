@@ -2,6 +2,7 @@
     session_start();
     if (!isset($_SESSION['login']) || $_SESSION['statut'] !== 'administrateur') {
         header('Location: identification.html');
+        exit;
     }
 
     require_once 'bdd.php';
@@ -75,6 +76,16 @@
     <div class="admin">
         <div>
             <h2>Ajout d'un fruit dans le stock</h2>
+            
+            <?php
+                // Affiche les erreurs d'ajout dans la bd
+                if (!empty($_SESSION['erreursAjout'])) {
+                    foreach ($_SESSION['erreursAjout'] as $erreur) {
+                        echo "$erreur<br>";
+                    }
+                    $_SESSION['erreursAjout'] = [];
+                }
+            ?>
             <form method="post" action="creationProduit.php" enctype="multipart/form-data">
                 Libelle : <input type="text" name="LIBELLE_AJOUT" size="20" maxlength="30"><br><br>
                 Description courte : <input type="text" name="DESCRIPTION" size="40" maxlength="255"><br><br>
@@ -87,6 +98,7 @@
         
         <div>
             <h2>Suppression de fruit(s) dans le stock</h2>
+
             <form method="post" action="suppressionProduit.php">
                 Numéro du produit : <input type="text" name="ID_SUPPR" size="10" maxlength="30"><br><br>
                 <input class="boutton" type="submit" name="supprimerProduit" value="SUPPRIMER">

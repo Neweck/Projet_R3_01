@@ -12,4 +12,5 @@
     
     // Redirection vers l'accueil
     header('Location: accueil.php');
+    exit;
 ?>

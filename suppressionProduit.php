@@ -37,4 +37,5 @@
 
         mysqli_close($link);
         header('Location: backOffice.php');
+        exit;
     }

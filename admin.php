@@ -21,6 +21,7 @@
                 $_SESSION['panier'] = [];
             }
             header('Location: accueil.php');
+            exit;
         } 
         else {
             echo "invalide";
