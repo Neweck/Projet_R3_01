@@ -17,6 +17,7 @@
 </head>
 <body>
 
+    <!-- Menu de navigation -->
     <div id='banniere'>
         <h1>Fruit Market</h1>
         <nav>
@@ -48,18 +49,20 @@
                 $desc = $produit["description"];
                 $prix = $produit["prix"];
 
+                // Récupération de la 1ere image de chaque produit
                 $requeteImage = "SELECT * FROM $imageBd WHERE idProduit = $id LIMIT 1";
                 $listeImage = mysqli_query($link, $requeteImage);
 
                 echo "<div class='produit'>";
-
                 echo "<div class='images'>";
+
                 while ($image = mysqli_fetch_assoc($listeImage)) {
                     $cheminBD = $image["chemin"];
                     echo "<img src='vignette.php?img=$cheminBD'>";
                 }
                 echo "</div>";
 
+                // Affichage des informations de chaque produit
                 echo "<h2>$id</h2>";
                 echo "<h3>$lib</h3>";
                 echo "$desc<br><br>";
@@ -74,7 +77,7 @@
             mysqli_close($link);
         ?>
     
-    <!-- Formulaire d'ajout et de suppression de produits -->
+    <!-- Formulaires d'ajout et de suppression de produits -->
     <div class="admin">
         <div>
             <h2>Ajout d'un fruit dans le stock</h2>

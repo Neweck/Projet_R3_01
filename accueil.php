@@ -90,6 +90,7 @@
             echo "<p>$desc</p>";
             echo "<p>$prix berries</p> <br>";
 
+            // Bouton d'ajout au panier
             echo "<form method='post' action=''>";
             echo "<button class='boutton' type='submit' name='ajouterAuPanier' value='$id'>Ajouter au panier</button>";
             echo "</form>";
