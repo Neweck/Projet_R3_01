@@ -4,6 +4,7 @@
 
     header('Content-Type: text/html; charset=UTF-8');
 
+    // Demande de s'indentifier (si tu ne l'est pas)
     if (!isset($_SESSION['login'])) {
         header('Location: identification.html');
         exit;
@@ -13,31 +14,38 @@
         $_SESSION['panier'] = [];
     }
 
+    // Listes des erreurs de payement
     $erreurs = [];
     $paye = false;
 
+    // Recharge la page si tu essaies de payer sans rien dans le panier
     if (count($_SESSION['panier']) == 0 && !isset($_POST['payer'])) {
         header('Location: panier.php');
         exit;
     }
 
     if (isset($_POST['payer'])) {
+        // Récupère les informations données dans le formulaire (avec les valeurs par défaut pour que les tests fonctionnent)
         $carte = $_POST['carte'] ?? '';
         $mois  = (int) ($_POST['mois'] ?? 0);
         $annee = (int) ($_POST['annee'] ?? 0);
 
+        // Erreur si le panier est vide
         if (count($_SESSION['panier']) == 0) {
             $erreurs[] = "Votre panier est vide.";
         }
 
+        // Erreur si la carte n'a pas 16 chiffres ou/et que le premier et dernier chiffre ne sont pas les mêmes
         if (!preg_match('/^[0-9]{16}$/', $carte)) {
             $erreurs[] = "Le numéro de carte doit contenir exactement 16 chiffres.";
-        } else {
+        } 
+        else {
             if ($carte[15] !== $carte[0]) {
                 $erreurs[] = "Le dernier chiffre doit être identique au premier.";
             }
         }
 
+        // Erreur si la carte n'est pas valide dans plus de 3 mois
         $expiration = mktime(0, 0, 0, $mois + 1, 0, $annee);
         $limite = strtotime('+3 months');
         if ($expiration <= $limite) {
@@ -86,10 +94,12 @@
     <h2>Paiement : </h2>
 
     <?php
+        // Affiche que le payement a bien fonctionné
         if ($paye) {
             echo "<p>Vous avez bien payé !</p>";
         } 
         else {
+            // Sinon, affiche la page normalement (et les erreurs éventuelles)
             echo "<p>Total à payer : $total berries</p>";
 
             foreach ($erreurs as $erreur) {

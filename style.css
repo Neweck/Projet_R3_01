@@ -1,6 +1,4 @@
 /* Style CSS global */
-/* ----------------------------- */
-
 body {
     margin: 0;
     background-color: rgb(237, 235, 207);
@@ -22,6 +20,34 @@ nav {
     gap: 5%;
     justify-content: center;
     padding-bottom: 1%;
+}
+
+.produit {
+    border: 2px solid black;
+    background-color: rgb(234, 220, 167);
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
+
+.images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#banniere {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/banniere_fruits.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    min-height: 180px;
+    padding: 20px;
+    margin: 0;
 }
 
 /* Style des boutons  */
@@ -55,47 +81,10 @@ nav {
 }
 
 
-/* Fichier backOffice.php */
-/* ----------------------------- */
-
-#banniere {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/banniere_fruits.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    min-height: 180px;
-    padding: 20px;
-    margin: 0;
-}
-
-
-.grille {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    gap: 30px;
-    width: 100%;
-}
-
-.produit {
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;
-    text-align: center;
-}
-
-.images {
-    display: flex;
-    flex-wrap: wrap;
-}
-
+/* Style CSS backOffice.php */
 .catalogue {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 20px;
     margin-top: 2%;
 }
@@ -105,7 +94,8 @@ nav {
 .admin {
     display: flex;
     gap: 40px;
-    border: 1px solid #ccc;
+    border: 2px solid black;
+    background-color: rgb(234, 220, 167);
     border-radius: 15px;
     align-items: flex-start;
     text-align: center;
@@ -123,7 +113,12 @@ nav {
 
 
 /* Style CSS accueil.php */
-/* ----------------------------- */
+.grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
 
 #apercu {
     display: none;
@@ -146,6 +141,8 @@ nav {
     border-radius: 8px;
 }
 
+
+/* Style CSS panier.php */
 table {
     border-spacing: 0;
     border: 2px solid black;

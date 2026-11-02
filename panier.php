@@ -4,6 +4,7 @@
 
     header('Content-Type: text/html; charset=UTF-8');
 
+    // Demande de s'indentifier (si tu ne l'est pas)
     if (!isset($_SESSION['login'])) {
         header('Location: identification.html');
         exit;
@@ -13,6 +14,7 @@
         $_SESSION['panier'] = [];
     }
 
+    // Ajoute 1 à la variable de séssion de l'article voulue
     if (isset($_POST['plus'])) {
         $id = (int) $_POST['plus'];
         if (isset($_SESSION['panier'][$id])) {
@@ -22,6 +24,7 @@
         exit;
     }
 
+    // Enlève 1 à la variable de séssion de l'article voulue
     if (isset($_POST['moins'])) {
         $id = (int) $_POST['moins'];
         if (isset($_SESSION['panier'][$id])) {
@@ -34,6 +37,7 @@
         exit;
     }
 
+    // Supprime l'article du panier
     if (isset($_POST['supprimer'])) {
         $id = (int) $_POST['supprimer'];
         unset($_SESSION['panier'][$id]);
@@ -68,6 +72,7 @@
         } 
         
         else {
+            // Création et peuplement du tableau des articles dans le panier (si il y en a)
             $total = 0;
 
             echo "<table>";

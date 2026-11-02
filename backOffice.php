@@ -16,17 +16,11 @@
     <title>Back Office</title>
 </head>
 <body>
-
-    <!-- Menu de navigation -->
     <div id='banniere'>
         <h1>Fruit Market</h1>
         <nav>
             <form action="accueil.php">
                 <button class="boutton">Accueil</button>
-            </form>
-            
-            <form action="logout.php">
-                <button class="boutton">Déconnexion</button>
             </form>
         </nav>
     </div>

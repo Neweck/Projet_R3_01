@@ -112,6 +112,7 @@
         <img id="apercuImg" src="" alt="">
     </div>
 
+    <!-- Affiche l'image en entier sur l'écrand -->
     <script>
         apercu = document.getElementById('apercu');
         apercuImg = document.getElementById('apercuImg');
